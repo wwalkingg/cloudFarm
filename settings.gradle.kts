@@ -13,7 +13,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "android"
+rootProject.name = "cloudFarm"
 include(":app")
 
 
