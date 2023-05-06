@@ -50,7 +50,7 @@ fun RecommendsScreen(component: RecommendsComponent, onCategoryClick: (id: Int) 
                         .padding(10.dp)
                         .clip(MaterialTheme.shapes.small)
                         .background(MaterialTheme.colorScheme.background)
-                        .height(100.dp)
+                        .height(200.dp)
                         .fillMaxWidth(),
                     list = porducts.map {
                         SwiperData(imgUrl = it.image) {
