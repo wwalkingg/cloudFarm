@@ -45,6 +45,7 @@
             <option value="$PROJECT_DIR$/feature/product-detail" />
             <option value="$PROJECT_DIR$/feature/reward-points" />
             <option value="$PROJECT_DIR$/feature/store-detail" />
+            <option value="$PROJECT_DIR$/feature/success-cases" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,35 +1,35 @@
 package com.example.feature.home
 
+import feature.succecsscases.SuccessCaseScreen
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.example.feature.home.category.CategoryScreen
 import com.example.feature.home.me.MeScreen
 import com.example.feature.home.recommends.RecommendsScreen
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, component: HomeComponent) {
+fun HomeScreen(component: HomeComponent) {
     LaunchedEffect(component.modelState.selected) {
         component.modelState.pagerState.scrollToPage(
             BottomMenus.values().indexOf(component.modelState.selected)
         )
     }
-    Scaffold(bottomBar = {
-        HomeBottomBar(
-            Modifier.fillMaxWidth(),
-            component.modelState.selected,
-            onSelected = { component.modelState.selected = it })
-    }) { padding ->
+    Scaffold(
+        contentWindowInsets = WindowInsets.systemBars,
+        bottomBar = {
+            HomeBottomBar(
+                Modifier.fillMaxWidth(),
+                component.modelState.selected,
+                onSelected = { component.modelState.selected = it })
+        }
+    ) { padding ->
         Column(Modifier.padding(padding)) {
             HorizontalPager(
                 pageCount = BottomMenus.values().size,
@@ -42,7 +42,8 @@ fun HomeScreen(modifier: Modifier = Modifier, component: HomeComponent) {
                     })
 
                     1 -> CategoryScreen(component = component.categoryComponent)
-                    2 -> MeScreen(component = component.meComponent)
+                    2 -> SuccessCaseScreen(component = component.successCasesComponent)
+                    3 -> MeScreen(component = component.meComponent)
                 }
             }
         }

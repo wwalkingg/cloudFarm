@@ -10,6 +10,8 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import com.example.feature.home.HomeComponent
+import feature.succecsscases.video_creator.SuccessCaseVideoCreatorComponent
+import feature.succecsscases.detail.SuccessCaseDetailComponent
 import core.common.NavConfig
 import core.common.navigation
 import feature.all_articles.AllArticlesComponent
@@ -17,13 +19,14 @@ import feature.article_detail.ArticleDetailComponent
 import feature.modifier_userinfo.ModifierUserinfoComponent
 import feature.product_detail.ProductDetailComponent
 import feature.store_detail.StoreDetailComponent
+import feature.succecsscases.image_creator.SuccessCaseImageCreatorComponent
 
 class RootComponent(componentContext: ComponentContext) : ComponentContext by componentContext {
 
     private val _childStack =
         childStack(
             source = navigation,
-            initialConfiguration = NavConfig.Home,
+            initialConfiguration = NavConfig.SuccessImageCaseCreator,
             handleBackButton = true,
             childFactory = ::createChild,
         )
@@ -76,6 +79,9 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
 
             NavConfig.RewardPoints -> Child.RewardPoints(RewardPointsComponent(componentContext))
             is NavConfig.StoreDetail -> Child.StoreDetail(StoreDetailComponent(componentContext, config.id))
+            NavConfig.SuccessVideoCaseCreator -> Child.SuccessVideoCaseCreator(SuccessCaseVideoCreatorComponent(componentContext))
+            is NavConfig.SuccessCaseDetail -> Child.SuccessCaseDetail(SuccessCaseDetailComponent(componentContext))
+            NavConfig.SuccessImageCaseCreator -> Child.SuccessImageCaseCreator(SuccessCaseImageCreatorComponent(componentContext))
         }
 
 
@@ -92,5 +98,8 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
         data class OrderManagement(val component: OrderManagementComponent) : Child
         data class RewardPoints(val component: RewardPointsComponent) : Child
         data class StoreDetail(val component: StoreDetailComponent) : Child
+        data class SuccessVideoCaseCreator(val component: SuccessCaseVideoCreatorComponent) : Child
+        data class SuccessImageCaseCreator(val component: SuccessCaseImageCreatorComponent) : Child
+        data class SuccessCaseDetail(val component: SuccessCaseDetailComponent) : Child
     }
 }

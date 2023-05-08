@@ -8,10 +8,15 @@ import core.common.navigation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavigationTopBar(modifier: Modifier = Modifier, title: String) {
+fun NavigationTopBar(
+    modifier: Modifier = Modifier,
+    title: String,
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
+) {
     TopAppBar(
         modifier = modifier,
         title = { Text(title) },
+        colors = colors,
         navigationIcon = {
             IconButton(onClick = { navigation.pop() }) {
                 Icon(Icons.Rounded.ArrowBack, contentDescription = null)

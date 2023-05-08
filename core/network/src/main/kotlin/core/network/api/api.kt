@@ -7,4 +7,5 @@ object Apis {
     object Product
     object Store
     object Order
+    object SuccessCases
 }

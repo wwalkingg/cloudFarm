@@ -9,15 +9,15 @@ import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.example.feature.home.category.CategoryComponent
 import com.example.feature.home.me.MeComponent
 import com.example.feature.home.recommends.RecommendsComponent
+import feature.succecsscases.SuccessCaseComponent
 import core.component_base.ModelState
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HomeComponent(componentContext: ComponentContext) : ComponentContext by componentContext {
     internal val modelState = instanceKeeper.getOrCreate { HomeModelState() }
 
     internal val categoryComponent = CategoryComponent(childContext("category"))
     internal val meComponent = MeComponent(childContext("Me"))
+    internal val successCasesComponent = SuccessCaseComponent(childContext("successCases"))
     internal val recommendsComponent = RecommendsComponent(childContext("Recommends"))
 
     fun jumpToCategory(id: Int) {
@@ -31,7 +31,7 @@ class HomeComponent(componentContext: ComponentContext) : ComponentContext by co
 internal class HomeModelState : ModelState() {
     @OptIn(ExperimentalFoundationApi::class)
     internal val pagerState = PagerState()
-    private var _selected: BottomMenus by mutableStateOf(BottomMenus.HOME)
+    private var _selected: BottomMenus by mutableStateOf(BottomMenus.SUCCESS_CASES)
 
     var selected: BottomMenus
         set(value) {

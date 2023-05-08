@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,15 +19,16 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.push
 import com.example.android.core.model.Category
 import com.example.android.core.model.Product
+import com.example.core.design_system.SystemBar
 import core.common.NavConfig
 import core.common.navigation
 import core.component_base.LoadUIState
 import kotlinx.collections.immutable.toPersistentList
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecommendsScreen(component: RecommendsComponent, onCategoryClick: (id: Int) -> Unit) {
-    Scaffold(topBar = { RecommendsTopBar() }) { padding ->
+    SystemBar(MaterialTheme.colorScheme.primary)
+    Scaffold(topBar = { RecommendsTopBar() }, contentWindowInsets = WindowInsets(0.dp)) { padding ->
         Column(
             Modifier
                 .fillMaxSize()

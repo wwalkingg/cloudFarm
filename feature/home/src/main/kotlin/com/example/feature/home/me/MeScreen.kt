@@ -3,14 +3,7 @@ package com.example.feature.home.me
 import SmallLoadUIStateScaffold
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -26,14 +19,15 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceAll
 import com.example.android.core.model.UserInfo
+import com.example.core.design_system.SystemBar
 import core.common.NavConfig
 import core.common.navigation
 import core.component_base.LoadUIState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MeScreen(modifier: Modifier = Modifier, component: MeComponent) {
-    Scaffold(modifier.padding(top = 10.dp)) { padding ->
+    SystemBar(MaterialTheme.colorScheme.background)
+    Scaffold(modifier, contentWindowInsets = WindowInsets(0.dp)) { padding ->
         val loadUserInfoUIState by component.model.loadUserInfoUIStateFlow.collectAsState()
         Column(
             Modifier

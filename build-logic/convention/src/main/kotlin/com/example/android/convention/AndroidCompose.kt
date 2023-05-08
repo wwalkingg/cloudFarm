@@ -49,6 +49,8 @@ internal fun Project.configureAndroidCompose(
             add("implementation", platform(bom))
             add("androidTestImplementation", platform(bom))
             add("implementation", libs.findLibrary("kotlinx-collections-immutable").get())
+            add("implementation",libs.findLibrary("androidx-compose-material3").get())
+            add("implementation",libs.findLibrary("accompanist-systemuicontroller").get())
         }
     }
 }

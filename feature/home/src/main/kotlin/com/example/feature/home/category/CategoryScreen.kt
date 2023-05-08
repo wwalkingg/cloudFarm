@@ -2,26 +2,13 @@ package com.example.feature.home.category
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.push
 import com.example.android.core.model.Category
 import com.example.android.core.model.Product
+import com.example.core.design_system.SystemBar
 import core.common.NavConfig
 import core.common.navigation
 import core.component_base.LoadUIState
@@ -44,7 +32,12 @@ import kotlinx.collections.immutable.toPersistentList
 )
 @Composable
 fun CategoryScreen(modifier: Modifier = Modifier, component: CategoryComponent) {
-    Scaffold(modifier, topBar = { TopAppBar(title = { Text(text = "全部分类") }) }) { padding ->
+    SystemBar(MaterialTheme.colorScheme.background)
+    Scaffold(
+        modifier = modifier,
+        topBar = { TopAppBar(title = { Text(text = "分类") }, windowInsets = WindowInsets(0.dp)) },
+        contentWindowInsets = WindowInsets(0.dp)
+    ) { padding ->
         val loadCategoriesUIState by component.modelState.loadCategoriesUIStateFlow.collectAsState()
         val categories = when (loadCategoriesUIState) {
             is LoadUIState.Success -> {
