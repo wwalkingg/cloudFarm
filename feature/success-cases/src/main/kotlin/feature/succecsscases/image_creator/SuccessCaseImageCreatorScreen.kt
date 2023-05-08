@@ -2,10 +2,7 @@ package feature.succecsscases.image_creator
 
 import NavigationTopBar
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,7 +25,7 @@ fun SuccessCaseImageCreatorScreen(component: SuccessCaseImageCreatorComponent) {
         Column(Modifier.padding(padding)) {
             CaseContentEdit(modifier = Modifier.weight(7f), component.modelState)
             Box(modifier = Modifier.weight(4f)){
-                ImageUpload(modifier = Modifier.fillMaxSize())
+                ImageUpload(modifier = Modifier.fillMaxSize(),component)
             }
         }
     }

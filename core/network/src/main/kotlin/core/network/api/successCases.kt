@@ -1,6 +1,7 @@
 package core.network.api
 
 import com.example.android.core.model.SuccessCase
+import com.example.android.core.model.UploadResponse
 import core.network.Resp
 import core.network.RespWithoutData
 import core.network.UploadState
@@ -71,10 +72,9 @@ suspend fun Apis.SuccessCases.uploadFile(filename: String, bytes: ByteArray) = c
         }
     }.apply {
         if (status.isSuccess()) {
-            val resp = body<RespWithoutData>()
-            if (resp.code == 200) {
-                send(UploadState.Complete)
-            } else this@callbackFlow.cancel(resp.msg)
+            val resp = body<UploadResponse>()
+            println(resp)
+            send(UploadState.Complete(resp.url!!))
         } else this@callbackFlow.cancel(status.description)
         awaitClose { }
     }
