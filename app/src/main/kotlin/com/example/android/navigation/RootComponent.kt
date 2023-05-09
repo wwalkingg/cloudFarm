@@ -19,6 +19,7 @@ import feature.product_detail.ProductDetailComponent
 import feature.store_detail.StoreDetailComponent
 import feature.succecsscases.detail.SuccessCaseDetailComponent
 import feature.succecsscases.image_creator.SuccessCaseImageCreatorComponent
+import feature.succecsscases.my.MyCaseComponent
 import feature.succecsscases.video_creator.SuccessCaseVideoCreatorComponent
 
 class RootComponent(componentContext: ComponentContext) : ComponentContext by componentContext {
@@ -26,7 +27,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
     private val _childStack =
         childStack(
             source = navigation,
-            initialConfiguration = NavConfig.Home,
+            initialConfiguration = NavConfig.Splash,
             handleBackButton = true,
             childFactory = ::createChild,
         )
@@ -97,6 +98,9 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
                     componentContext
                 )
             )
+
+            NavConfig.MyCase -> Child.MyCase(MyCaseComponent(componentContext))
+            NavConfig.Splash -> Child.Splash
         }
 
 
@@ -116,5 +120,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
         data class SuccessVideoCaseCreator(val component: SuccessCaseVideoCreatorComponent) : Child
         data class SuccessImageCaseCreator(val component: SuccessCaseImageCreatorComponent) : Child
         data class SuccessCaseDetail(val component: SuccessCaseDetailComponent) : Child
+        data class MyCase(val component: MyCaseComponent) : Child
+        object Splash:Child
     }
 }

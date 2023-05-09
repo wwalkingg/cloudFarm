@@ -53,6 +53,9 @@ fun MeScreen(modifier: Modifier = Modifier, component: MeComponent) {
             SettingItem(title = "收藏的商品", description = "收藏的商品列表", onClick = {
                 navigation.push(NavConfig.CollectionProduct)
             })
+            SettingItem(title = "我的分享", description = "查看或删除我的分享", onClick = {
+                navigation.push(NavConfig.MyCase)
+            })
             SettingItem(title = "我的订单", description = "我的订单", onClick = {
                 navigation.push(NavConfig.OrderManagement)
             })

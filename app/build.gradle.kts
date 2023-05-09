@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":feature:reward-points"))
     implementation(project(":feature:store-detail"))
     implementation(project(":feature:success-cases"))
+    implementation(project(":feature:splash"))
 
     implementation(project(":core:common"))
     implementation(project(":core:ui"))

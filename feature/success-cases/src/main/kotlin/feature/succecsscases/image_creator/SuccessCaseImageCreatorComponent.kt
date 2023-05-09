@@ -4,15 +4,19 @@ import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.mutableStateMapOf
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.pop
+import com.example.android.core.model.CaseParam
 import com.example.android.core.model.SuccessCase
+import core.common.navigation
 import core.component_base.PostUIState
 import core.component_base.UploadUIState
-import core.component_base.getFileName
+import core.component_base.getFileNameEnd
 import core.network.UploadState
 import core.network.api.Apis
 import core.network.api.publishCase
 import core.network.api.uploadFile
 import feature.succecsscases.creator.CreatorModelState
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +24,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import java.util.*
 
 class SuccessCaseImageCreatorComponent(componentContext: ComponentContext) : ComponentContext by componentContext {
     internal val modelState = SuccessCaseImageCreatorModelState()
@@ -38,10 +43,8 @@ internal class SuccessCaseImageCreatorModelState : CreatorModelState() {
                 println(imagesMap.values.map { it.value })
                 delay(1500L)
                 _postCaseUIStateFlow.emit(PostUIState.None)
-            }else{
-                val case = SuccessCase(
-                    id = (0..Int.MAX_VALUE).random(),
-                    customerId = 0,
+            } else {
+                val case = CaseParam(
                     images = imagesMap.values.map {
                         if (it.value is UploadUIState.Success) {
                             (it.value as UploadUIState.Success).url
@@ -50,7 +53,6 @@ internal class SuccessCaseImageCreatorModelState : CreatorModelState() {
                     video = "",
                     title = title,
                     content = content,
-                    createTime = Clock.System.now().toString(),
                     topic = listOf()
                 )
                 Apis.SuccessCases.publishCase(case)
@@ -67,6 +69,9 @@ internal class SuccessCaseImageCreatorModelState : CreatorModelState() {
                         _postCaseUIStateFlow.emit(PostUIState.Success)
                         delay(1500L)
                         _postCaseUIStateFlow.emit(PostUIState.None)
+                        MainScope().launch {
+                            navigation.pop()
+                        }
                     }
             }
         }
@@ -76,7 +81,7 @@ internal class SuccessCaseImageCreatorModelState : CreatorModelState() {
         coroutineScope.launch {
             context.contentResolver.openInputStream(uri)!!.use { inputStream ->
                 Apis.SuccessCases.uploadFile(
-                    filename = uri.getFileName(context) ?: "undefined",
+                    filename = "${UUID.randomUUID()}.${uri.getFileNameEnd(context)}",
                     inputStream.readBytes()
                 )
                     .onStart {

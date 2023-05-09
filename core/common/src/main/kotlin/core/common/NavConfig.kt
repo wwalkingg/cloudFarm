@@ -50,4 +50,10 @@ sealed class NavConfig : Parcelable {
 
     @Parcelize
     object SuccessImageCaseCreator : NavConfig()
+
+    @Parcelize
+    object MyCase : NavConfig()
+
+    @Parcelize
+    object Splash : NavConfig()
 }

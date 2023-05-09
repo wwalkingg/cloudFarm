@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.subscribe
 import com.example.android.core.model.SuccessCase
 import core.component_base.LoadUIState
 import core.component_base.ModelState
@@ -20,6 +21,13 @@ import kotlinx.coroutines.launch
 @Stable
 class SuccessCaseComponent(componentContext: ComponentContext) : ComponentContext by componentContext {
     internal val modelState = SuccessCaseModelState()
+    init {
+        lifecycle.subscribe(
+            onResume = {
+                modelState.loadAllCase()
+            }
+        )
+    }
 }
 
 internal class SuccessCaseModelState : ModelState() {

@@ -6,10 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +45,12 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(horizontal = 10.dp)
                 )
+                Text(
+                    text = "发布于 ${case.createTime}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(horizontal = 10.dp)
+                )
                 Divider()
                 Text(
                     text = case.content,
@@ -53,7 +61,8 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
                     var isFullScreenLook by remember {
                         mutableStateOf(false)
                     }
-                    AsyncImage(model = Config.baseImgUrl + url,
+                    println("hello ${Config.baseImgUrl + url.image}")
+                    AsyncImage(model = Config.baseImgUrl + url.image,
                         contentDescription = null,
                         modifier = Modifier
                             .clickable { isFullScreenLook = true }
@@ -61,7 +70,9 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
                             .clip(MaterialTheme.shapes.small)
                             .fillMaxWidth()
                             .aspectRatio(1.2f)
-                            .background(MaterialTheme.colorScheme.outlineVariant))
+                            .background(MaterialTheme.colorScheme.outlineVariant),
+                        contentScale = ContentScale.Crop
+                    )
                     if (isFullScreenLook) {
                         Popup(
                             onDismissRequest = { isFullScreenLook = false },
@@ -82,10 +93,9 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
                                     }
                                 }
                                 AsyncImage(
-                                    model = Config.baseImgUrl + url,
+                                    model = Config.baseImgUrl + url.image,
                                     contentDescription = null,
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Crop
+                                    modifier = Modifier.fillMaxSize()
                                 )
                                 IconButton(
                                     onClick = { isFullScreenLook = false },
@@ -107,8 +117,25 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
                     VideoPlayer(
                         url = Config.baseImgUrl + case.video,
                         modifier = Modifier
+                            .padding(horizontal = 10.dp)
                             .fillMaxWidth()
                             .aspectRatio(1.2f)
+                    )
+                }
+                Divider()
+                Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.padding(horizontal = 10.dp)) {
+                    AsyncImage(
+                        model = Config.baseImgUrl + case.avatar,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(
+                        text = case.name,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.outline
                     )
                 }
             }

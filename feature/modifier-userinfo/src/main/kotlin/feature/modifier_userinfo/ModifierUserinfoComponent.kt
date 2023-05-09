@@ -53,13 +53,13 @@ internal class ModifierUserinfoModelState : ModelState() {
                 .catch {
                     it.printStackTrace()
                     _modifierResultUIStateFlow.value = PostUIState.Error(it)
-                }
-                .onCompletion {
                     delay(1500L)
                     _modifierResultUIStateFlow.value = PostUIState.None
                 }
                 .collect {
                     _modifierResultUIStateFlow.value = PostUIState.Success
+                    delay(1500L)
+                    _modifierResultUIStateFlow.value = PostUIState.None
                 }
 
         }

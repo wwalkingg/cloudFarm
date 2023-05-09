@@ -32,7 +32,7 @@ val httpClient = HttpClient(CIO) {
         })
     }
     install(HttpTimeout) {
-        requestTimeoutMillis = 15000
+        requestTimeoutMillis = 40000
     }
     install(Logging)
 }

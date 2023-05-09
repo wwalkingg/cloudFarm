@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -34,7 +35,7 @@ fun SuccessCaseItem(modifier: Modifier = Modifier, case: SuccessCase, onClick: (
         Column(modifier = Modifier.clickable { onClick() }.padding(10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AsyncImage(
-                    model = "",
+                    model = Config.baseImgUrl + case.avatar,
                     contentDescription = null,
                     modifier = Modifier
                         .size(24.dp)
@@ -42,7 +43,7 @@ fun SuccessCaseItem(modifier: Modifier = Modifier, case: SuccessCase, onClick: (
                         .background(MaterialTheme.colorScheme.outlineVariant)
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = "User Name")
+                Text(text = case.name)
             }
             Text(text = case.title, style = MaterialTheme.typography.titleLarge)
             Text(
@@ -60,12 +61,13 @@ fun SuccessCaseItem(modifier: Modifier = Modifier, case: SuccessCase, onClick: (
                 ) {
                     case.images.forEach { image ->
                         AsyncImage(
-                            model = Config.baseImgUrl + image,
+                            model = Config.baseImgUrl + image.image,
                             contentDescription = null,
                             modifier = Modifier
                                 .size(100.dp, 60.dp)
                                 .clip(MaterialTheme.shapes.extraSmall)
-                                .background(MaterialTheme.colorScheme.outlineVariant)
+                                .background(MaterialTheme.colorScheme.outlineVariant),
+                            contentScale = ContentScale.Crop
                         )
                     }
                 }

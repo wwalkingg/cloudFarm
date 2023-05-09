@@ -5,4 +5,5 @@ import com.example.android.design_system.R
 object Images {
     val logo = R.drawable.cloud_farm_logo
     val logoEn = R.drawable.cloud_farm_logo_en
+    val splash = R.drawable.splash
 }

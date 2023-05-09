@@ -1,5 +1,6 @@
 package core.network.api
 
+import com.example.android.core.model.CaseParam
 import com.example.android.core.model.SuccessCase
 import com.example.android.core.model.UploadResponse
 import core.network.Resp
@@ -41,9 +42,9 @@ suspend fun Apis.SuccessCases.getMyCases() = callbackFlow {
 }
 
 suspend fun Apis.SuccessCases.deleteMyCase(caseId: Int) = callbackFlow {
-    httpClient.delete("filter/shares/{id}") {
+    httpClient.delete("filter/shares/${caseId}") {
         parameter("id", caseId)
-    }.apply {
+    }.apply {println(bodyAsText())
         if (status.isSuccess()) {
             val resp = body<RespWithoutData>()
             if (resp.code == 200) {
@@ -62,7 +63,7 @@ suspend fun Apis.SuccessCases.uploadFile(filename: String, bytes: ByteArray) = c
                 formData {
                     append("file", bytes, Headers.build {
                         append(HttpHeaders.ContentType, ContentType.Any)
-                        append(HttpHeaders.ContentDisposition, filename)
+                        append(HttpHeaders.ContentDisposition, "filename=\"${filename}\"")
                     })
                 },
                 boundary = "WebAppBoundary"
@@ -81,14 +82,13 @@ suspend fun Apis.SuccessCases.uploadFile(filename: String, bytes: ByteArray) = c
     }
 }
 
-suspend fun Apis.SuccessCases.publishCase(case: SuccessCase) = callbackFlow {
+suspend fun Apis.SuccessCases.publishCase(case: CaseParam) = callbackFlow {
     httpClient.post("filter/shares") {
         contentType(ContentType.Application.Json)
         setBody(case)
     }.apply {
         println(bodyAsText())
         if (status.isSuccess()) {
-
             val resp = body<RespWithoutData>()
             if (resp.code == 200) {
                 send(null)

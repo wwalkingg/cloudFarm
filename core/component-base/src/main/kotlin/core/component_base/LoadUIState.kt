@@ -28,7 +28,7 @@ sealed interface UploadUIState {
     data class Progress(val percent: Float) : UploadUIState
 }
 
-fun Uri.getFileName(context: Context): String? {
+fun Uri.getFileNameEnd(context: Context): String? {
     var fileName: String? = null
     val cursor = context.contentResolver.query(this, null, null, null, null)
     cursor?.use {
@@ -41,6 +41,20 @@ fun Uri.getFileName(context: Context): String? {
     fileName?.let {
         if (it.lastIndexOf(".") != -1 && it.lastIndexOf(".") < it.length - 1) {
             fileName = it.substring(it.lastIndexOf(".") + 1)
+        }
+    }
+    return fileName
+}
+
+
+fun Uri.getFileName(context: Context): String? {
+    var fileName: String? = null
+    val cursor = context.contentResolver.query(this, null, null, null, null)
+    cursor?.use {
+        val a = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        if(a < 0) throw Exception("uri error")
+        if (it.moveToFirst()) {
+            fileName = it.getString(a)
         }
     }
     return fileName
