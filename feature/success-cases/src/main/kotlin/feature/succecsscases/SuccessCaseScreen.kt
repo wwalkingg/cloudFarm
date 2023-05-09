@@ -34,7 +34,9 @@ fun SuccessCaseScreen(component: SuccessCaseComponent) {
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     item {
-                        HotTopPic(modifier = Modifier, cases) {}
+                        HotTopPic(modifier = Modifier, cases) { case ->
+                            navigation.push(NavConfig.SuccessCaseDetail(case.id))
+                        }
                     }
                     items(items = cases) { case ->
                         SuccessCaseItem(

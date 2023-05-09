@@ -10,6 +10,7 @@ import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
@@ -85,7 +86,9 @@ suspend fun Apis.SuccessCases.publishCase(case: SuccessCase) = callbackFlow {
         contentType(ContentType.Application.Json)
         setBody(case)
     }.apply {
+        println(bodyAsText())
         if (status.isSuccess()) {
+
             val resp = body<RespWithoutData>()
             if (resp.code == 200) {
                 send(null)
