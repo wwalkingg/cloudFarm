@@ -11,6 +11,7 @@ import core.component_base.PostUIState
 import core.network.api.Apis
 import core.network.api.getUserInfo
 import core.network.api.modifierUserinfo
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -50,11 +51,17 @@ internal class ModifierUserinfoModelState : ModelState() {
             Apis.Auth.modifierUserinfo(newUserinfo!!)
                 .onStart { _modifierResultUIStateFlow.value = PostUIState.Loading }
                 .catch {
+                    it.printStackTrace()
                     _modifierResultUIStateFlow.value = PostUIState.Error(it)
+                }
+                .onCompletion {
+                    delay(1500L)
+                    _modifierResultUIStateFlow.value = PostUIState.None
                 }
                 .collect {
                     _modifierResultUIStateFlow.value = PostUIState.Success
                 }
+
         }
     }
 }

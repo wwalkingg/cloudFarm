@@ -10,7 +10,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.arkivanov.decompose.router.stack.push
 import com.example.core.design_system.SystemBar
+import core.common.NavConfig
+import core.common.navigation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,12 +27,20 @@ fun SuccessCaseScreen(component: SuccessCaseComponent) {
         Column(modifier = Modifier.padding(it)) {
             val loadAllCasesUIState by component.modelState.loadAllCaseUIStateFlow.collectAsState()
             SmallLoadUIStateScaffold(loadUIState = loadAllCasesUIState) { cases ->
-                LazyColumn(modifier = Modifier.fillMaxSize().padding(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    item{
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    item {
                         HotTopPic(modifier = Modifier, cases) {}
                     }
                     items(items = cases) { case ->
-                        SuccessCaseItem(modifier = Modifier.fillMaxWidth(), case, onClick = {})
+                        SuccessCaseItem(
+                            modifier = Modifier.fillMaxWidth(),
+                            case,
+                            onClick = { navigation.push(NavConfig.SuccessCaseDetail(case.id)) })
                     }
                 }
             }

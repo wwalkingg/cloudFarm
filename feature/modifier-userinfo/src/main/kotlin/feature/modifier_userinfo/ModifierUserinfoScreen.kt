@@ -2,22 +2,19 @@ package feature.modifier_userinfo
 
 import LoadUIStateScaffold
 import NavigationTopBar
-import android.widget.Toast
+import PostUIStateDialog
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import core.component_base.LoadUIState
-import core.component_base.PostUIState
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -26,7 +23,10 @@ fun ModifierUserinfoScreen(modifier: Modifier = Modifier, component: ModifierUse
     LoadUIStateScaffold(loadUserInfoUIState) {
         Scaffold(modifier = modifier, topBar = { NavigationTopBar(title = "个人资料") }) { padding ->
             Column(
-                modifier = Modifier.padding(padding).verticalScroll(rememberScrollState()).padding(horizontal = 10.dp)
+                modifier = Modifier
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 10.dp)
             ) {
                 UserInfoItem(
                     modifier = Modifier.fillMaxWidth(),
@@ -62,26 +62,7 @@ fun ModifierUserinfoScreen(modifier: Modifier = Modifier, component: ModifierUse
                 }
                 val modifierResultUIState by component.modelState.modifierResultUIStateFlow.collectAsState()
                 val context = LocalContext.current
-                when (modifierResultUIState) {
-                    is PostUIState.Error -> {
-                        Toast.makeText(context, "失败", Toast.LENGTH_SHORT).show()
-                    }
-
-                    PostUIState.Loading -> {
-                        Dialog(onDismissRequest = {}) {
-                            Box(
-                                Modifier.fillMaxWidth(.8f).aspectRatio(1f).background(MaterialTheme.colorScheme.surface)
-                            ) {
-                                CircularProgressIndicator(Modifier.align(Alignment.Center))
-                            }
-                        }
-                    }
-
-                    PostUIState.None -> {}
-                    PostUIState.Success -> {
-                        Toast.makeText(context, "成功", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                PostUIStateDialog(postUIState = modifierResultUIState)
             }
         }
     }

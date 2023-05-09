@@ -68,7 +68,7 @@ suspend fun Apis.SuccessCases.uploadFile(filename: String, bytes: ByteArray) = c
             )
         )
         onUpload { bytesSentTotal, contentLength ->
-            send(UploadState.InProgress((contentLength / bytesSentTotal.toDouble())))
+            send(UploadState.InProgress((bytesSentTotal / contentLength.toDouble())))
         }
     }.apply {
         if (status.isSuccess()) {

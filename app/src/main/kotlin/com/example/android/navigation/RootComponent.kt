@@ -10,8 +10,6 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import com.example.feature.home.HomeComponent
-import feature.succecsscases.video_creator.SuccessCaseVideoCreatorComponent
-import feature.succecsscases.detail.SuccessCaseDetailComponent
 import core.common.NavConfig
 import core.common.navigation
 import feature.all_articles.AllArticlesComponent
@@ -19,14 +17,16 @@ import feature.article_detail.ArticleDetailComponent
 import feature.modifier_userinfo.ModifierUserinfoComponent
 import feature.product_detail.ProductDetailComponent
 import feature.store_detail.StoreDetailComponent
+import feature.succecsscases.detail.SuccessCaseDetailComponent
 import feature.succecsscases.image_creator.SuccessCaseImageCreatorComponent
+import feature.succecsscases.video_creator.SuccessCaseVideoCreatorComponent
 
 class RootComponent(componentContext: ComponentContext) : ComponentContext by componentContext {
 
     private val _childStack =
         childStack(
             source = navigation,
-            initialConfiguration = NavConfig.SuccessImageCaseCreator,
+            initialConfiguration = NavConfig.Home,
             handleBackButton = true,
             childFactory = ::createChild,
         )
@@ -79,9 +79,24 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
 
             NavConfig.RewardPoints -> Child.RewardPoints(RewardPointsComponent(componentContext))
             is NavConfig.StoreDetail -> Child.StoreDetail(StoreDetailComponent(componentContext, config.id))
-            NavConfig.SuccessVideoCaseCreator -> Child.SuccessVideoCaseCreator(SuccessCaseVideoCreatorComponent(componentContext))
-            is NavConfig.SuccessCaseDetail -> Child.SuccessCaseDetail(SuccessCaseDetailComponent(componentContext))
-            NavConfig.SuccessImageCaseCreator -> Child.SuccessImageCaseCreator(SuccessCaseImageCreatorComponent(componentContext))
+            NavConfig.SuccessVideoCaseCreator -> Child.SuccessVideoCaseCreator(
+                SuccessCaseVideoCreatorComponent(
+                    componentContext
+                )
+            )
+
+            is NavConfig.SuccessCaseDetail -> Child.SuccessCaseDetail(
+                SuccessCaseDetailComponent(
+                    componentContext,
+                    config.id
+                )
+            )
+
+            NavConfig.SuccessImageCaseCreator -> Child.SuccessImageCaseCreator(
+                SuccessCaseImageCreatorComponent(
+                    componentContext
+                )
+            )
         }
 
 
