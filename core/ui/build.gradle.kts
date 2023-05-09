@@ -17,6 +17,9 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
     api(libs.kotlinx.datetime)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.appcompat)
+    implementation("com.google.android.exoplayer:exoplayer:2.18.6")
 
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)

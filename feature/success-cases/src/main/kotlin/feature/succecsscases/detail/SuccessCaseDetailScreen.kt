@@ -14,12 +14,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import coil.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import core.common.Config
+import video_player.VideoPlayer
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -82,7 +84,8 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
                                 AsyncImage(
                                     model = Config.baseImgUrl + url,
                                     contentDescription = null,
-                                    modifier = Modifier.fillMaxSize()
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
                                 )
                                 IconButton(
                                     onClick = { isFullScreenLook = false },
@@ -99,6 +102,14 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
                             }
                         }
                     }
+                }
+                if (case.video.isNotBlank()) {
+                    VideoPlayer(
+                        url = Config.baseImgUrl + case.video,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1.2f)
+                    )
                 }
             }
         }
