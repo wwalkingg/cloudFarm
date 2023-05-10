@@ -23,7 +23,7 @@ internal class LoginModelState : ModelState() {
     private val _loginUIStateFlow = MutableStateFlow<LoginUIState>(LoginUIState.None)
     val loginUIStateFlow = _loginUIStateFlow.asStateFlow()
     var username by mutableStateOf("123456")
-    var password by mutableStateOf("147258")
+    var password by mutableStateOf("123456")
     fun login() {
         coroutineScope.launch {
             Apis.Auth.login(username, password)
