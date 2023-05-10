@@ -31,7 +31,7 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
     val loadDetailUIState by component.modelState.loadCaseDetailUIStateFlow.collectAsState()
     LoadUIStateScaffold(loadUIState = loadDetailUIState) { case ->
         Scaffold(
-            topBar = { NavigationTopBar(title = case.title) },
+            topBar = { NavigationTopBar(title = "文章详情") },
             contentWindowInsets = WindowInsets(0.dp)
         ) { padding ->
             Column(
@@ -123,7 +123,7 @@ fun SuccessCaseDetailScreen(modifier: Modifier = Modifier, component: SuccessCas
                     )
                 }
                 Divider()
-                Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.padding(horizontal = 10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.padding(horizontal = 10.dp).navigationBarsPadding()) {
                     AsyncImage(
                         model = Config.baseImgUrl + case.avatar,
                         contentDescription = null,
